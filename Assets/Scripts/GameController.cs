@@ -25,7 +25,11 @@ public class GameController : MonoBehaviour {
         Life = 3;
 	}
 	
+
     //game!!!
+
+    //test comment from bob
+
 	void Update () {
 
         //ScoreText.text = "Score: " + Score;
