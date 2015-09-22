@@ -19,6 +19,9 @@ static class Extensions
 
 public class GameMenu : MonoBehaviour {
 
+
+    public float CameraFollowSpeed = 3;
+
     public List<GameObject> Planes = new List<GameObject>();
 
     LinkedList<GameObject> planes;
@@ -35,27 +38,15 @@ public class GameMenu : MonoBehaviour {
 
 
 
-    public Vector3 v1 = new Vector3();
-    public Vector3 v2 = new Vector3();
-
     void Update () {
 
         Vector3 planePos = currentPlane.Value.transform.position;
 
+        //camera.transform.rotation = Quaternion.Euler(rotx,roty,rotz);
+        //camera.transform.rotation = Quaternion.LookRotation(planePos - camera.transform.position);
 
-
-        //Quaternion qeuler = Quaternion.LookRotation(camera.transform.position - planePos, Vector3.forward);
-        //qeuler.z= 0.0f;
-        //qeuler.y = 0.0f;
-
-
-        //camera.transform.rotation = Quaternion.Slerp(camera.transform.rotation, qeuler, Time.deltaTime * 10);
-
-        //camera.transform.rotation.
-
-        //camera.transform.rotation = Quaternion.ToEulerAngles()
-
-        camera.transform.LookAt(planePos);
+        var cameraLookRot = Quaternion.LookRotation(planePos - camera.transform.position); ;
+        camera.transform.rotation = Quaternion.Slerp(camera.transform.rotation, cameraLookRot, Time.deltaTime * CameraFollowSpeed);
 
     }
 
