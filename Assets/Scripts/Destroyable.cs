@@ -60,8 +60,6 @@ public class Destroyable : MonoBehaviour
 
         if (col.gameObject.CompareTag("Player"))
         {
-
-            GameController.Life--;
             Destroy(gameObject);
         }
 

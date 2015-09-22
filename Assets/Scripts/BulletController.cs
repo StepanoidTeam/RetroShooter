@@ -22,7 +22,6 @@ public class BulletController : MonoBehaviour
         if (col.gameObject.CompareTag("Enemy"))
         {
             Destroy(gameObject);
-            GameController.Score += 10;
         }
 
     }
