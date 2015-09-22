@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour {
         Life = 3;
 	}
 	
+    //test comment from bob
 
 	void Update () {
 
