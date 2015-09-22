@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using System;
 
 static class Extensions
 {
@@ -20,48 +18,31 @@ static class Extensions
 public class GameMenu : MonoBehaviour {
 
 
-    public float CameraFollowSpeed = 3;
-
     public List<GameObject> Planes = new List<GameObject>();
 
-    LinkedList<GameObject> planes;
     LinkedListNode<GameObject> currentPlane;
-    GameObject camera;
+    LookAtSLerp lookatSlerp;
 
     // Use this for initialization
-    void Start () {
-        camera = GameObject.Find("Main Camera");
+    void Start() {
+        lookatSlerp = GameObject.Find("Main Camera").GetComponent<LookAtSLerp>();
 
-        planes = new LinkedList<GameObject>(Planes);
+        LinkedList<GameObject> planes = new LinkedList<GameObject>(Planes);
         currentPlane = planes.First;
+        lookatSlerp.Target = currentPlane.Value.transform.position;
     }
 
 
 
-    void Update () {
-
-        Vector3 planePos = currentPlane.Value.transform.position;
-
-        //camera.transform.rotation = Quaternion.Euler(rotx,roty,rotz);
-        //camera.transform.rotation = Quaternion.LookRotation(planePos - camera.transform.position);
-
-        var cameraLookRot = Quaternion.LookRotation(planePos - camera.transform.position); ;
-        camera.transform.rotation = Quaternion.Slerp(camera.transform.rotation, cameraLookRot, Time.deltaTime * CameraFollowSpeed);
+    void Update() {
 
     }
 
+    public void ChangePlane(bool nextPrev) {
 
+        currentPlane = (nextPrev) ? currentPlane.InfiniteNext() : currentPlane.InfinitePrevious();
+        lookatSlerp.Target = currentPlane.Value.transform.position;
 
-    public void ChangePlane(int shift) {
-        
-        if (shift > 0)
-        {
-            currentPlane = currentPlane.InfiniteNext();
-        }
-        else {
-            currentPlane = currentPlane.InfinitePrevious();
-        }
-                
     }
 
 
