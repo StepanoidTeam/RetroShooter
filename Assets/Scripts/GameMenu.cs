@@ -29,7 +29,7 @@ public class GameMenu : MonoBehaviour {
 
         LinkedList<GameObject> planes = new LinkedList<GameObject>(Planes);
         currentPlane = planes.First;
-        lookatSlerp.Target = currentPlane.Value.transform.position;
+        lookatSlerp.Target = currentPlane.Value.transform;
     }
 
 
@@ -41,7 +41,7 @@ public class GameMenu : MonoBehaviour {
     public void ChangePlane(bool nextPrev) {
 
         currentPlane = (nextPrev) ? currentPlane.InfiniteNext() : currentPlane.InfinitePrevious();
-        lookatSlerp.Target = currentPlane.Value.transform.position;
+        lookatSlerp.Target = currentPlane.Value.transform;
 
     }
 

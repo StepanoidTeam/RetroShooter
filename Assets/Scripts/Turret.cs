@@ -2,7 +2,8 @@
 using System.Collections;
 using System;
 
-public class Turret : MonoBehaviour {
+public class Turret : MonoBehaviour
+{
 
     public GameObject Bullet;
     public float BulletSpeed = 2000;
@@ -12,32 +13,44 @@ public class Turret : MonoBehaviour {
     // 
 
     GameObject player;
-    
-	void Start () {
+
+    void Start()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        var d = GetComponent<Destroyable>();
+        GetComponent<LookAtSLerp>().Target = player.transform;
 
-
-        d.OnDie += D_OnDie;
+        GetComponent<Destroyable>().OnDie += Turret_OnDie;
     }
 
-    private void D_OnDie(GameObject sender, int durability)
+    public float turretDeathCooldown = 10;
+
+    private void Turret_OnDie(GameObject sender, int durability)
     {
-        if (durability <= 0)
-        {
-            Destroy(gameObject);
-        }
+        //Destroy(gameObject);
+
+        gameObject.SetActive(false);
+
+        turretDeathCooldown = 10;
+        
     }
+
 
     // Update is called once per frame
-    void Update () {
-        if (player != null) { 
-            transform.LookAt(player.transform);
-
+    void Update()
+    {
+        if (player != null)
+        {
             Shooting();
         }
-        
+
+        if (turretDeathCooldown <= 0 && !gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+        }
+        else {
+            turretDeathCooldown -= Time.deltaTime;
+        }
     }
 
 

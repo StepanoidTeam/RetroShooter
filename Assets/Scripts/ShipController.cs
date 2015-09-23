@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ShipController : MonoBehaviour
 {
@@ -17,26 +18,30 @@ public class ShipController : MonoBehaviour
 
     public GameObject bullet;
 
-
+    public Text health;
     // Use this for initialization
     void Start()
     {
-
         var d = GetComponent<Destroyable>();
+        d.OnHit += ShipController_OnHit;
+        d.OnDie += ShipController_OnDie;
 
+        health.text = "100%";
 
-        d.OnDie += D_OnDie;
     }
 
-    private void D_OnDie(GameObject sender, int durability)
+    private void ShipController_OnHit(GameObject sender, int durability)
     {
-        Debug.Log(durability);
-        if (durability <= 0)
-        {
-            Destroy(gameObject);
-        }
+        health.text = durability / 20f * 100f + "%";
     }
 
+    private void ShipController_OnDie(GameObject sender, int durability)
+    {
+        Destroy(gameObject);
+        Application.LoadLevel("menu");
+    }
+
+   
     float cooldown = 0;
     void Shooting()
     {

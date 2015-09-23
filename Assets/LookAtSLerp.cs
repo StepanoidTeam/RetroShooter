@@ -2,7 +2,7 @@
 
 public class LookAtSLerp : MonoBehaviour {
 
-    public Vector3 Target;
+    public Transform Target;
 
     [Range(0.1f, 20)]
     public float RotationSpeed = 3;
@@ -18,7 +18,7 @@ public class LookAtSLerp : MonoBehaviour {
 	void FixedUpdate () {
         if (Target != null)
         {
-            var qLookRotation = Quaternion.LookRotation(Target - transform.position);
+            var qLookRotation = Quaternion.LookRotation(Target.position - transform.position);
             transform.rotation = Quaternion.Slerp(transform.rotation, qLookRotation, Time.deltaTime * RotationSpeed);
         }
     }

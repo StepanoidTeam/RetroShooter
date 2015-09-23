@@ -30,35 +30,27 @@ public class Destroyable : MonoBehaviour
         if (explosion != null)
         {
             var expl = Instantiate(explosion, transform.position, Quaternion.identity);
-            Destroy(expl, 5f);
+            Destroy(expl, 3f);
         }
 
-        if (Durability <= 0)
+        if (--Durability <= 0)
         {
             OnDie(gameObject, Durability);
+        }
+        else {
+            OnHit(gameObject, Durability);
         }
     }
 
     void OnTriggerEnter(Collider col)
     {
 
-        if (col.gameObject.CompareTag("Bullet"))
+        if (col.gameObject.CompareTag("Bullet") || col.gameObject.CompareTag("Player"))
         {
             Explode();
-
-            if (--Durability <= 0)
-            {
-                Destroy(gameObject);
-            }
-
         }
 
         if (col.gameObject.CompareTag("Wall"))
-        {
-            Destroy(gameObject);
-        }
-
-        if (col.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
