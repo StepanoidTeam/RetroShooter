@@ -43,14 +43,6 @@ public class Turret : MonoBehaviour
         {
             Shooting();
         }
-
-        if (turretDeathCooldown <= 0 && !gameObject.activeSelf)
-        {
-            gameObject.SetActive(true);
-        }
-        else {
-            turretDeathCooldown -= Time.deltaTime;
-        }
     }
 
 

@@ -19,7 +19,7 @@ public class BulletController : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.CompareTag("Enemy"))
+        if (col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("Player"))//GetComponent<Destroyable>() != null
         {
             Destroy(gameObject);
         }
