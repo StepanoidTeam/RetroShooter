@@ -6,7 +6,6 @@ public class ShipController : MonoBehaviour
 {
 
     public float ShipSpeed = 40;
-    public float TiltRate = 3f;
 
     public Rigidbody ship;
 
@@ -47,7 +46,5 @@ public class ShipController : MonoBehaviour
         float topDownAxis = Input.GetAxis("Vertical");
 
         ship.AddForce(new Vector3(leftRightAxis, 0, topDownAxis) * ShipSpeed);
-
-        ship.transform.rotation = Quaternion.Euler(0, 0, ship.velocity.x * -TiltRate);
     }
 }
