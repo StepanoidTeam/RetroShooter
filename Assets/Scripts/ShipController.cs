@@ -10,24 +10,40 @@ public class ShipController : MonoBehaviour
     public Rigidbody ship;
 
     public Text health;
+    public Slider healthBar;
+
+
+    GamePlay gamePlay;
+
+    float MaxDurability = 20f;
+
     // Use this for initialization
     void Start()
     {
+        gamePlay = GameObject.FindObjectOfType<GamePlay>();
+
         var d = GetComponent<Destroyable>();
         d.OnHit += ShipController_OnHit;
         d.OnDie += ShipController_OnDie;
 
         health.text = "100%";
+        healthBar.value = 1;
 
     }
 
     private void ShipController_OnHit(GameObject sender, int durability)
     {
-        health.text = durability / 20f * 100f + "%";
+        health.text = durability / MaxDurability * 100f + "%";
+        healthBar.value = durability / MaxDurability;
     }
 
     private void ShipController_OnDie(GameObject sender, int durability)
     {
+
+
+        PlayerPrefs.SetInt("HiScore", gamePlay.HiScore);
+
+
         Destroy(gameObject);
         Application.LoadLevel("menu");
     }

@@ -34,7 +34,8 @@ public class Cannon : MonoBehaviour
         else
         {
             GameObject bullet = Instantiate(BulletGO, BulletStartPosition.position, Quaternion.identity) as GameObject;
-            bullet.GetComponent<Rigidbody>().AddForce(BulletStartPosition.forward * BulletSpeed);
+            bullet.transform.rotation = BulletStartPosition.rotation;
+            //bullet.GetComponent<Rigidbody>().AddForce(BulletStartPosition.forward * BulletSpeed);
 
             cooldown += BulletCooldown;
         }

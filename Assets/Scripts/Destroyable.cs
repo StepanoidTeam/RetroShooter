@@ -10,7 +10,7 @@ public class Destroyable : MonoBehaviour
     public delegate void HitEventHandler(GameObject sender, int durability);
     public event HitEventHandler OnDie;
     public event HitEventHandler OnHit;
-    
+
     // Use this for initialization
     void Start()
     {
@@ -33,12 +33,21 @@ public class Destroyable : MonoBehaviour
             Destroy(expl, 3f);
         }
 
+
         if (--Durability <= 0)
         {
-            OnDie(gameObject, Durability);
+            if (OnDie != null)
+            {
+                OnDie(gameObject, Durability);
+            }
+
         }
-        else {
-            OnHit(gameObject, Durability);
+        else
+        {
+            if (OnHit != null)
+            {
+                OnHit(gameObject, Durability);
+            }
         }
     }
 

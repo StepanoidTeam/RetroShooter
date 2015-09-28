@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
     public float WaveWait;
 
 
-    public int SpawnCount;
+    public int SpawnCount = 1;
 
     // Use this for initialization
     void Start()
@@ -37,7 +37,9 @@ public class Spawner : MonoBehaviour
             {
                 var spawnPoint = transform.position + new Vector3(Random.Range(-Boundaries.x, Boundaries.x), Random.Range(-Boundaries.y, Boundaries.y), Random.Range(-Boundaries.z, Boundaries.z));
 
-                Instantiate(SpawnObject, spawnPoint, Quaternion.identity);
+                GameObject go = Instantiate(SpawnObject, spawnPoint, Quaternion.identity) as GameObject;
+                go.transform.rotation = transform.rotation;
+
                 yield return new WaitForSeconds(SpawnWait);
             }
             yield return new WaitForSeconds(WaveWait);

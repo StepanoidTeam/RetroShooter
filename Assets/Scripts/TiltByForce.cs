@@ -18,7 +18,7 @@ public class TiltByForce : MonoBehaviour {
 
         //rb.transform.rotation = Quaternion.Euler(Vector3.Scale(rb.velocity, TiltRate) * Time.deltaTime);
 
-        rb.transform.rotation = Quaternion.Euler(0, 0, rb.velocity.x * TiltRate);
+        rb.transform.rotation = Quaternion.Euler(rb.rotation.x, rb.rotation.y, rb.velocity.x * TiltRate);
 
     }
 }

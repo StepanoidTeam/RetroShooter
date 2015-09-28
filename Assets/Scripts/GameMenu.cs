@@ -20,6 +20,8 @@ public class GameMenu : MonoBehaviour {
 
     public List<GameObject> Planes = new List<GameObject>();
 
+    public UnityEngine.UI.Text HiScoreText;
+
     LinkedListNode<GameObject> currentPlane;
     LookAtSLerp lookatSlerp;
 
@@ -30,6 +32,11 @@ public class GameMenu : MonoBehaviour {
         LinkedList<GameObject> planes = new LinkedList<GameObject>(Planes);
         currentPlane = planes.First;
         lookatSlerp.Target = currentPlane.Value.transform;
+
+
+        var hiScoreValue = PlayerPrefs.HasKey("HiScore") ? PlayerPrefs.GetInt("HiScore"): 0;
+
+        HiScoreText.text = hiScoreValue.ToString("D8");
     }
 
 
