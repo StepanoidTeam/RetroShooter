@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 public class Turret : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class Turret : MonoBehaviour
 
         GetComponent<LookAtSLerp>().Target = player.transform;
 
-        GetComponent<Destroyable>().OnDie += Turret_OnDie;
+        //GetComponent<Destroyable>().OnDie += Turret_OnDie;
 
         gamePlay = GameObject.FindObjectOfType<GamePlay>();
     }
@@ -21,7 +20,7 @@ public class Turret : MonoBehaviour
     private void Turret_OnDie(GameObject sender, int durability)
     {
         //Destroy(gameObject);
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
         gamePlay.AddScore(10);
     }

@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Destroyable : MonoBehaviour
 {
 
     public int Durability = 1;
-    public GameObject explosion;
+    public string ColliderTag;
+
+    public GameObject HitEffect;
+    public GameObject DieEffect;
 
     public delegate void HitEventHandler(GameObject sender, int durability);
     public event HitEventHandler OnDie;
@@ -25,20 +27,19 @@ public class Destroyable : MonoBehaviour
     }
 
 
-    void Explode()
+    void Hit()
     {
-        if (explosion != null)
-        {
-            var expl = Instantiate(explosion, transform.position, Quaternion.identity);
-            Destroy(expl, 3f);
-        }
-
-
         if (--Durability <= 0)
         {
             if (OnDie != null)
             {
                 OnDie(gameObject, Durability);
+
+                if (DieEffect != null)
+                {
+                    var die = Instantiate(DieEffect, transform.position, Quaternion.identity);
+                    Destroy(die, 3f);
+                }
             }
 
         }
@@ -47,22 +48,21 @@ public class Destroyable : MonoBehaviour
             if (OnHit != null)
             {
                 OnHit(gameObject, Durability);
+
+                if (HitEffect != null)
+                {
+                    var hit = Instantiate(HitEffect, transform.position, Quaternion.identity);
+                    Destroy(hit, 3f);
+                }
             }
         }
     }
 
     void OnTriggerEnter(Collider col)
     {
-
-        if (col.gameObject.CompareTag("Bullet") || col.gameObject.CompareTag("Player"))
+        if (col.gameObject.CompareTag(ColliderTag))
         {
-            Explode();
+            Hit();
         }
-
-        if (col.gameObject.CompareTag("Wall"))
-        {
-            Destroy(gameObject);
-        }
-
     }
 }
