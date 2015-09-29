@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+
 
 public class Destroyable : MonoBehaviour
 {
@@ -6,55 +8,35 @@ public class Destroyable : MonoBehaviour
     public int Durability = 1;
     public string ColliderTag;
 
-    public GameObject HitEffect;
     public GameObject DieEffect;
 
     public delegate void HitEventHandler(GameObject sender, int durability);
+
     public event HitEventHandler OnDie;
     public event HitEventHandler OnHit;
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-    }
 
 
     void Hit()
     {
-        if (--Durability <= 0)
+        Durability--;
+
+        if (Durability <= 0)
         {
             if (OnDie != null)
             {
                 OnDie(gameObject, Durability);
-
-                if (DieEffect != null)
-                {
-                    var die = Instantiate(DieEffect, transform.position, Quaternion.identity);
-                    Destroy(die, 3f);
-                }
+                
             }
-
-        }
-        else
-        {
-            if (OnHit != null)
+            if (DieEffect != null)
             {
-                OnHit(gameObject, Durability);
-
-                if (HitEffect != null)
-                {
-                    var hit = Instantiate(HitEffect, transform.position, Quaternion.identity);
-                    Destroy(hit, 3f);
-                }
+                var die = Instantiate(DieEffect, transform.position, Quaternion.identity);
+                Destroy(die, 3f);
             }
+            Destroy(gameObject);
+        }
+        else if (OnHit != null) //Dur > 0
+        {
+            OnHit(gameObject, Durability);
         }
     }
 

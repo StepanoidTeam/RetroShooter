@@ -10,11 +10,10 @@ public class Turret : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        GetComponent<LookAtSLerp>().Target = player.transform;
+        GetComponentInChildren<LookAtSLerp>().Target = player.transform;
+        GetComponent<Destroyable>().OnDie += Turret_OnDie;
 
-        //GetComponent<Destroyable>().OnDie += Turret_OnDie;
-
-        gamePlay = GameObject.FindObjectOfType<GamePlay>();
+        gamePlay = FindObjectOfType<GamePlay>();
     }
 
     private void Turret_OnDie(GameObject sender, int durability)

@@ -25,6 +25,8 @@ public class GamePlay : MonoBehaviour
         maxDurability = player.Durability;
 
         player.OnDie += Player_OnDie;
+
+        
     }
 
 
@@ -45,17 +47,26 @@ public class GamePlay : MonoBehaviour
     private void Player_OnDie(GameObject sender, int durability)
     {
         Destroy(sender);
-        PlayerPrefs.SetInt("HiScore", HiScore);
-
+        
         StartCoroutine(EndGame());
+    }
+
+    private void SetNewHiScore(int newHiScore) {
+        var prevHiScore = PlayerPrefs.GetInt("HiScore");
+
+        if (newHiScore > prevHiScore) {
+            PlayerPrefs.SetInt("HiScore", newHiScore);
+        }
     }
 
 
     private IEnumerator EndGame()
     {
+        SetNewHiScore(HiScore);
+
         GetComponent<SlowMo>().Speed = 0.1f;
         yield return new WaitForSeconds(0.3f);
-
+        
         Application.LoadLevel("menu");
     }
 

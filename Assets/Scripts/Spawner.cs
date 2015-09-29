@@ -46,4 +46,17 @@ public class Spawner : MonoBehaviour
         }
 
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawIcon(transform.position, "ghost-icon.png", false);
+
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(transform.position, transform.forward * 2f);
+        Gizmos.DrawSphere(transform.position + transform.forward*0.3f,0.3f);
+    }
 }
