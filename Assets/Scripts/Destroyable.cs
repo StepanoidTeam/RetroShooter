@@ -4,28 +4,30 @@ using UnityEngine;
 
 public class Destroyable : MonoBehaviour
 {
-
-    public int Durability = 1;
+    [Range(0, 1)]
+    public float Health = 1;
+    [Range(0, 1)]
+    public float DamagePerHit = 1;
     public string ColliderTag;
 
     public GameObject DieEffect;
 
-    public delegate void HitEventHandler(GameObject sender, int durability);
+    public delegate void HitEventHandler(GameObject sender, Collider other, float health);
 
     public event HitEventHandler OnDie;
     public event HitEventHandler OnHit;
 
 
-    void Hit()
+    void Hit(Collider other)
     {
-        Durability--;
+        Health = Mathf.Max(Health - DamagePerHit, 0f);
 
-        if (Durability <= 0)
+        if (Health <= 0)
         {
             if (OnDie != null)
             {
-                OnDie(gameObject, Durability);
-                
+                OnDie(gameObject, other, Health);
+
             }
             if (DieEffect != null)
             {
@@ -36,15 +38,15 @@ public class Destroyable : MonoBehaviour
         }
         else if (OnHit != null) //Dur > 0
         {
-            OnHit(gameObject, Durability);
+            OnHit(gameObject, other, Health);
         }
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnTriggerEnter(Collider other)
     {
-        if (col.gameObject.CompareTag(ColliderTag))
+        if (other.gameObject.CompareTag(ColliderTag))
         {
-            Hit();
+            Hit(other);
         }
     }
 }

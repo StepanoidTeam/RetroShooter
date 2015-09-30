@@ -13,7 +13,7 @@ public class GamePlay : MonoBehaviour
 
     public int HiScore;
 
-    float maxDurability = 0;
+
 
 
     // Use this for initialization
@@ -22,13 +22,10 @@ public class GamePlay : MonoBehaviour
         HiScore = 0;
         AddScore(0);
 
-        maxDurability = player.Durability;
-
         player.OnDie += Player_OnDie;
 
-        
-    }
 
+    }
 
     // Update is called once per frame
     void Update()
@@ -37,24 +34,27 @@ public class GamePlay : MonoBehaviour
         UpdateUI();
     }
 
-    void UpdateUI() {
-        //HealthText.text = player.Durability / maxDurability * 100f + "%";
-        HealthText.text = player.Durability.ToString();
-        HealthBar.value = player.Durability / maxDurability;
+    void UpdateUI()
+    {
+        //HealthText.text = player.Health / player.Durability * 100f + "%";
+        HealthText.text = (Mathf.RoundToInt(player.Health * 100f)).ToString();
+        HealthBar.value = player.Health;
     }
 
 
-    private void Player_OnDie(GameObject sender, int durability)
+    private void Player_OnDie(GameObject sender, Collider other, float durability)
     {
         Destroy(sender);
-        
+
         StartCoroutine(EndGame());
     }
 
-    private void SetNewHiScore(int newHiScore) {
+    private void SetNewHiScore(int newHiScore)
+    {
         var prevHiScore = PlayerPrefs.GetInt("HiScore");
 
-        if (newHiScore > prevHiScore) {
+        if (newHiScore > prevHiScore)
+        {
             PlayerPrefs.SetInt("HiScore", newHiScore);
         }
     }
@@ -66,7 +66,7 @@ public class GamePlay : MonoBehaviour
 
         GetComponent<SlowMo>().Speed = 0.1f;
         yield return new WaitForSeconds(0.3f);
-        
+
         Application.LoadLevel("menu");
     }
 

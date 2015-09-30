@@ -16,7 +16,7 @@ public class Turret : MonoBehaviour
         gamePlay = FindObjectOfType<GamePlay>();
     }
 
-    private void Turret_OnDie(GameObject sender, int durability)
+    private void Turret_OnDie(GameObject sender, Collider other, float health)
     {
         //Destroy(gameObject);
         //gameObject.SetActive(false);
