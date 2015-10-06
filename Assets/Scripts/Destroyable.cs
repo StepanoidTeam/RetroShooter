@@ -20,14 +20,14 @@ public class Destroyable : MonoBehaviour
 
     void Hit(Collider other)
     {
-        Health = Mathf.Max(Health - DamagePerHit, 0f);
+        Health = Mathf.Max((float)Math.Round(Health - DamagePerHit, 2), 0f);
+
 
         if (Health <= 0)
         {
             if (OnDie != null)
             {
                 OnDie(gameObject, other, Health);
-
             }
             if (DieEffect != null)
             {

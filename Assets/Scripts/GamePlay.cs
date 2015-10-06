@@ -31,14 +31,6 @@ public class GamePlay : MonoBehaviour
     void Update()
     {
         CheckKeys();
-        UpdateUI();
-    }
-
-    void UpdateUI()
-    {
-        //HealthText.text = player.Health / player.Durability * 100f + "%";
-        HealthText.text = (Mathf.RoundToInt(player.Health * 100f)).ToString();
-        HealthBar.value = player.Health;
     }
 
 

@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    #region Events
+    public delegate void SpawnEventHandler(GameObject sender);
+
+    public event SpawnEventHandler OnSpawn;
+    #endregion
+
+    #region properties
     public GameObject SpawnObject;
     public Vector3 Boundaries;
 
@@ -10,8 +17,10 @@ public class Spawner : MonoBehaviour
     public float SpawnWait;
     public float WaveWait;
 
+    public bool IsActive = true;
 
     public int SpawnCount = 1;
+    #endregion
 
     // Use this for initialization
     void Start()
@@ -23,7 +32,6 @@ public class Spawner : MonoBehaviour
     void Update()
     {
 
-
     }
 
 
@@ -31,7 +39,7 @@ public class Spawner : MonoBehaviour
     {
         yield return new WaitForSeconds(StartWait);
 
-        while (true)
+        while (IsActive)
         {
             for (int i = 0; i < SpawnCount; i++)
             {
@@ -39,6 +47,7 @@ public class Spawner : MonoBehaviour
 
                 GameObject go = Instantiate(SpawnObject, spawnPoint, Quaternion.identity) as GameObject;
                 go.transform.rotation = transform.rotation;
+                if (OnSpawn != null) OnSpawn(go);
 
                 yield return new WaitForSeconds(SpawnWait);
             }
@@ -57,6 +66,6 @@ public class Spawner : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(transform.position, transform.forward * 2f);
-        Gizmos.DrawSphere(transform.position + transform.forward*0.3f,0.3f);
+        Gizmos.DrawSphere(transform.position + transform.forward * 0.3f, 0.3f);
     }
 }

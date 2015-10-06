@@ -5,11 +5,12 @@ public class TiltByForce : MonoBehaviour {
     //public Vector3 TiltRate;
     public float TiltRate = -2;
 
-    Rigidbody rb;
+    public Rigidbody RigidbodyToRefer;
+    public Transform TransformToRotate;
     // Use this for initialization
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
     }
 
 
@@ -18,7 +19,7 @@ public class TiltByForce : MonoBehaviour {
 
         //rb.transform.rotation = Quaternion.Euler(Vector3.Scale(rb.velocity, TiltRate) * Time.deltaTime);
 
-        rb.transform.rotation = Quaternion.Euler(rb.rotation.x, rb.rotation.y, rb.velocity.x * TiltRate);
+        TransformToRotate.rotation = Quaternion.Euler(RigidbodyToRefer.rotation.x, RigidbodyToRefer.rotation.y, RigidbodyToRefer.velocity.x * TiltRate);
 
     }
 }

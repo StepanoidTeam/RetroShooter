@@ -14,6 +14,8 @@ public class Turret : MonoBehaviour
         GetComponent<Destroyable>().OnDie += Turret_OnDie;
 
         gamePlay = FindObjectOfType<GamePlay>();
+        
+
     }
 
     private void Turret_OnDie(GameObject sender, Collider other, float health)

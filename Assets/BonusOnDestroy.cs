@@ -17,5 +17,11 @@ public class BonusOnDestroy : MonoBehaviour
         var d = other.GetComponent<Destroyable>();
 
         d.Health = Mathf.Min(d.Health + BonusHealth, 1f);
+
+        var audio = GetComponent<AudioSource>();
+        if (audio != null)
+        {
+            audio.Play();
+        }
     }
 }
