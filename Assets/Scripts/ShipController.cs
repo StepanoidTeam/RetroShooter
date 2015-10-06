@@ -22,6 +22,7 @@ public class ShipController : MonoBehaviour
         float leftRightAxis = Input.GetAxis("Horizontal");
         float topDownAxis = Input.GetAxis("Vertical");
 
-        ship.AddForce(new Vector3(leftRightAxis, 0, topDownAxis) * ShipSpeed);
+        //ship.MovePosition(ship.position + new Vector3(leftRightAxis, 0, topDownAxis) * ShipSpeed * Time.deltaTime);
+        ship.AddForce(new Vector3(leftRightAxis, 0, topDownAxis) * ShipSpeed/** Time.deltaTime*/);
     }
 }
